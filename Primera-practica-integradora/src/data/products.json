@@ -1,0 +1,123 @@
+[
+  {
+    "id": 1,
+    "title": "Jugo",
+    "description": "Limonada",
+    "code": "3Z8bK6",
+    "price": 125,
+    "status": true,
+    "stock": 18,
+    "category": "Almacen"
+  },
+  {
+    "id": 2,
+    "title": "Arroz",
+    "description": "Yamaní",
+    "code": "aR7Ft2",
+    "price": 530,
+    "status": true,
+    "stock": 15,
+    "category": "Almacen"
+  },
+  {
+    "id": 3,
+    "title": "Harina",
+    "description": "0000",
+    "code": "9p2QsE",
+    "price": 870,
+    "status": true,
+    "stock": 12,
+    "category": "Almacen"
+  },
+  {
+    "id": 4,
+    "title": "Leche",
+    "description": "Descremada",
+    "code": "X6cY4v",
+    "price": 1200,
+    "status": true,
+    "stock": 24,
+    "category": "Lacteos"
+  },
+  {
+    "id": 5,
+    "title": "Huevos",
+    "description": "Blancos",
+    "code": "H1jN7l",
+    "price": 900,
+    "status": true,
+    "stock": "12",
+    "category": "Almacen"
+  },
+  {
+    "id": 6,
+    "title": "Cereales",
+    "description": "Chocolate",
+    "code": "d5R9Lp",
+    "price": 1600,
+    "status": true,
+    "stock": 15,
+    "category": "Almacen"
+  },
+  {
+    "id": 7,
+    "title": "Papel Higiénico",
+    "description": "30 Metros",
+    "code": "M2aZ8q",
+    "price": 870,
+    "status": true,
+    "stock": 12,
+    "category": "Limpieza e higiene"
+  },
+  {
+    "id": 8,
+    "title": "Manzana",
+    "description": "Roja",
+    "code": "V9gT3x",
+    "price": 715,
+    "status": true,
+    "stock": 20,
+    "category": "Verdulería"
+  },
+  {
+    "id": 9,
+    "title": "Pan",
+    "description": "Integral",
+    "code": "F4kP7s",
+    "price": 1500,
+    "status": true,
+    "stock": 15,
+    "category": "Almacen"
+  },
+  {
+    "id": 10,
+    "title": "Queso",
+    "description": "Untable",
+    "code": "W7hR6t",
+    "price": 860,
+    "status": true,
+    "stock": 10,
+    "category": "Lacteos"
+  },
+  {
+    "id": 11,
+    "title": "Coca-Cola",
+    "description": "Zero",
+    "code": "B4xN2J",
+    "price": 1520,
+    "status": true,
+    "stock": 8,
+    "category": "Bebidas",
+    "thumbnail": []
+  },
+  {
+    "id": 12,
+    "title": "Lapicera",
+    "description": "Trazo grueso",
+    "code": "3H57zE",
+    "price": 670,
+    "status": true,
+    "stock": 24,
+    "category": "Librería"
+  }
+]
