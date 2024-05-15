@@ -2,8 +2,9 @@
 
 import express from "express";
 import handlebars from "express-handlebars"
-import socketProducts from "./server/socketProducts.js";
 import { Server } from "socket.io";
+import mongoose from "mongoose";
+import socketProducts from "./server/socketProducts.js";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js"
 import viewsRouter from "./routes/views.router.js";
@@ -15,6 +16,8 @@ const PORT = 8080;
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
+
+mongoose.connect("mongodb+srv://Kevin:Kovinatr123@ecommerce.ahzibzs.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=ecommerce");
 
 //Handlebars
 app.engine("handlebars", handlebars.engine());

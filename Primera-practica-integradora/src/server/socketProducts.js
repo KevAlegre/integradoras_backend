@@ -1,6 +1,4 @@
-import ProductManager from "../classes/ProductManager.js";
-
-const productManager = new ProductManager("./src/data/products.json");
+import productModel from "../dao/models/products.model.js";
 
 const socketProducts = (socketServer) => {
     socketServer.on("connection", (socket) => {
@@ -10,13 +8,11 @@ const socketProducts = (socketServer) => {
             data.price = parseInt(data.price);
             data.stock = parseInt(data.stock);
 
-            await productManager.addProduct(data)
+            await productModel.create(data);
         });
 
         socket.on("deleteProduct", async (productId) => {
-            productId.id = parseInt(productId.id);
-
-            await productManager.deleteProduct(productId.id);
+            await productModel.deleteOne({_id: productId});
         });
     });
 }

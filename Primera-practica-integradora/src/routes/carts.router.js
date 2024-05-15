@@ -1,30 +1,61 @@
 import { Router } from "express";
-import CartManager from "../classes/CartManager.js"
+import cartModel from "../dao/models/carts.model.js";
 
 const cartsRouter = Router();
-const cartManager = new CartManager("./src/data/cart.json");
 
 cartsRouter.post("/api/carts/", async (req, res) => {
-    await cartManager.createCart();
-    res.send({message: "Se creó el carrito correctamente"});
+    try {
+        await cartModel.create({products: []});
+        res.send({message: "Se creó el carrito correctamente"});
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 cartsRouter.get("/api/carts/:cid", async (req, res) => {
-    const cartId = parseInt(req.params.cid);
-    const cartContent = await cartManager.getCartContent(cartId);
-
-    if (cartContent) {
-        res.send({products: cartContent});
-    } else {
-        res.send({message: "El carrito con el ID ingresado no existe"});
-    };
+    try {
+        const cartId = req.params.cid;
+        const cartContent = await cartModel.findOne({_id: cartId});
+    
+        if (cartContent) {
+            res.send({cartContent});
+        } else {
+            res.send({message: "El carrito con el ID ingresado no existe"});
+        };
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 cartsRouter.post("/api/carts/:cid/product/:pid", async (req, res) => {
-    const cartId = parseInt(req.params.cid);
-    const productId = parseInt(req.params.pid);
-    await cartManager.addToCart(cartId, productId);
-    res.send({message: "Producto agregado al carrito con éxito"});
+    try {
+        const cartId = req.params.cid;
+        const productId = req.params.pid;
+
+        const cart = await cartModel.findOne({_id: cartId});
+
+        if (cart) {
+            const cartContent = cart.products;
+
+            const productToCart = cartContent.some((product) => product === productId);
+
+            if (!productToCart) {
+                
+                    const addToCart = await cartModel.create({_id: cartId, quantity: 1})
+
+                    res.send({message: "Producto agregado al carrito correctamente", payload: addToCart});
+                 
+                // else {
+                //     const addToCart = await cartModel.updateOne({_id: productId, quantity: quantity + 1});
+                //     res.send({message: "Producto sumado al carrito correctamente", payload: addToCart});
+                // };
+            };
+        } else {
+            console.log("El carrito no existe");
+        };
+    } catch (error) {
+        console.log(error);
+    };
 });
 
 export default cartsRouter;

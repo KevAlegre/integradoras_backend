@@ -1,66 +1,73 @@
 import { Router } from "express";
-import ProductManager from "../classes/ProductManager.js";
+import productModel from "../dao/models/products.model.js";
 
 const productsRouter = Router();
-const productManager = new ProductManager("./src/data/products.json");
 
 productsRouter.get("/api/products", async (req, res) => {
-    const limit = req.query.limit;
-    const products = await productManager.limitProducts(limit);
-    res.send({products});
+    try {
+        const products = await productModel.find();
+        res.send({products});
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 productsRouter.get("/api/products/:pid", async (req, res) => {
-    const productId = parseInt(req.params.pid);
-    const product = await productManager.getProductById(productId);
-    if (product) {
-        res.send({product});
-    } else {
-        res.send({message: "El producto con el ID ingresado no existe"});
-    };
+    try {
+        const productId = req.params.pid;
+        const product = await productModel.findOne({_id: productId});
+
+        if (product) {
+            res.send({product});
+        } else {
+            res.send({message: "El producto con el ID ingresado no existe"});
+        };
+    } catch (error) {
+        console.log(error);
+    }
 });
 
-productsRouter.post("/api/products/", async (req, res) => {
-    const product = req.body;
-    const {title, description, price, code, stock, category, thumbnail} = product;
+productsRouter.post("/api/products", async (req, res) => {
+    try {
+        const {title, description, price, code, stock, category, thumbnail} = req.body;
 
-    if(!title, !description, !price, !code, !stock, !category) {
-        return res.status(400).send({message: "Todos los campos son requeridos"})
-    }
-
-    const newProduct = {
-        title: title,
-        description: description,
-        code: code,
-        price: price,
-        status: true,
-        stock: stock,
-        category: category,
-        thumbnail: thumbnail || []
-    }
+        if(!title, !description, !price, !code, !stock, !category) {
+            res.send({message: "Todos los campos son requeridos"})
+        }
     
-    productManager.addProduct(newProduct);
-    res.status(200).send({message: "Producto agregado con éxito"});
+        const newProduct = await productModel.create({
+            title: title,
+            description: description,
+            code: code,
+            price: price,
+            status: true,
+            stock: stock,
+            category: category,
+            thumbnail: thumbnail
+        });
+        
+        res.send({message: "Producto agregado con éxito", payload: newProduct});
+    } catch (error) {
+        console.log(error);
+    }
+
 });
 
 productsRouter.put("/api/products/:pid", async (req, res ) => {
-    const productId = parseInt(req.params.pid);
-    const products = await productManager.getProducts();
-    const product = products.find((product) => product.id === productId);
-    
-    if (product) {
-        const {key, value} = req.body;
-        console.log(key, value);
-        productManager.updateProduct(productId, key, value); 
-        res.send({message: "Producto modificado correctamente."});
-    }
+    try {
+        const productId = req.params.pid;
+        const productToReplace = req.body;
+        await productModel.updateOne({_id: productId}, productToReplace);
 
-    res.send({message: "El producto no se pudo actualizar."});
+        res.send({message: "Producto actualizado con éxito"});
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 productsRouter.delete("/api/products/:pid", async(req, res) => {
-    const productId = parseInt(req.params.pid);
-    await productManager.deleteProduct(productId);
+    const productId = req.params.pid;
+    await productModel.deleteOne({_id: productId});
     res.send({message: "El producto se eliminó correctamente"});
 });
 
