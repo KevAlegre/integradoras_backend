@@ -12,10 +12,19 @@ function sendDataCreate() {
     }
 
     socket.emit("newProduct", data);
+
+    document.getElementById("title").value = "";
+    document.getElementById("description").value = "";
+    document.getElementById("code").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("stock").value = "";
+    document.getElementById("category").value = "";
 };
 
 function sendDataDelete() {
     const data = document.getElementById("delete-id").value;
 
     socket.emit("deleteProduct", data);
+
+    document.getElementById("delete-id").value = "";
 }

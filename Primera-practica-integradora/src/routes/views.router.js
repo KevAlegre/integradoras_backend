@@ -5,7 +5,7 @@ const viewsRouter = Router();
 
 viewsRouter.get("/", async (req, res) => {
     try {
-        const products = await productModel.find();
+        const products = await productModel.find().lean();
         res.render("home", {products});
     } catch (error) {
         console.log(error);
@@ -14,6 +14,10 @@ viewsRouter.get("/", async (req, res) => {
 
 viewsRouter.get("/realtimeproducts", (req, res) => {
     res.render("realTimeProducts", {});
+});
+
+viewsRouter.get("/chat", (req, res) => {
+    res.render("chat", {})
 });
 
 export default viewsRouter;

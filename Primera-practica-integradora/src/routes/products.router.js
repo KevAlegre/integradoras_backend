@@ -3,7 +3,7 @@ import productModel from "../dao/models/products.model.js";
 
 const productsRouter = Router();
 
-productsRouter.get("/api/products", async (req, res) => {
+productsRouter.get("/", async (req, res) => {
     try {
         const products = await productModel.find();
         res.send({products});
@@ -12,7 +12,7 @@ productsRouter.get("/api/products", async (req, res) => {
     }
 });
 
-productsRouter.get("/api/products/:pid", async (req, res) => {
+productsRouter.get("/:pid", async (req, res) => {
     try {
         const productId = req.params.pid;
         const product = await productModel.findOne({_id: productId});
@@ -27,7 +27,7 @@ productsRouter.get("/api/products/:pid", async (req, res) => {
     }
 });
 
-productsRouter.post("/api/products", async (req, res) => {
+productsRouter.post("/", async (req, res) => {
     try {
         const {title, description, price, code, stock, category, thumbnail} = req.body;
 
@@ -53,7 +53,7 @@ productsRouter.post("/api/products", async (req, res) => {
 
 });
 
-productsRouter.put("/api/products/:pid", async (req, res ) => {
+productsRouter.put("/:pid", async (req, res ) => {
     try {
         const productId = req.params.pid;
         const productToReplace = req.body;
@@ -65,7 +65,7 @@ productsRouter.put("/api/products/:pid", async (req, res ) => {
     }
 });
 
-productsRouter.delete("/api/products/:pid", async(req, res) => {
+productsRouter.delete("/:pid", async(req, res) => {
     const productId = req.params.pid;
     await productModel.deleteOne({_id: productId});
     res.send({message: "El producto se eliminó correctamente"});
