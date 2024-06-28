@@ -63,7 +63,7 @@ viewsRouter.get("/realtimeproducts", isAuth, async (req, res) => {
         res.render("realtimeproducts", {products, prevLink, nextLink, page, user});
     } catch (error) {
         console.log(error);
-    }
+    };
 });
 
 viewsRouter.get("/chat", (req, res) => {
